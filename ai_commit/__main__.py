@@ -40,7 +40,8 @@ def get_staged_diff() -> str | None:
         logger.error("Error getting git diff: %s", getattr(e, 'output', e))
         return None
     except FileNotFoundError:
-        logger.error("Git command not found. Please ensure git is installed and in your PATH.")
+        logger.error(
+            "Git command not found. Please ensure git is installed and in your PATH.")
         return None
 
 
@@ -83,7 +84,8 @@ Commit Message:
 def commit_with_message(msg: str) -> None:
     """Run git commit with the message."""
     try:
-        subprocess.run(["git", "commit", "-m", msg], check=True)
+        subprocess.run(["git", "commit", "-F", "-"], input=msg,
+                       text=True, check=True, encoding='utf-8')
         console.print(
             f"\n✅ Successfully committed with message: [bold green]{msg}[/bold green]")
     except subprocess.CalledProcessError as e:
@@ -109,6 +111,7 @@ def show_suggested_message(msg: str):
             border_style="blue"
         )
     )
+
 
 def prompt_manual_message() -> str:
     """Prompt the user to enter a commit message manually."""
@@ -183,7 +186,7 @@ def main():
             console.print(
                 "[red]Failed to generate a commit message. Please write one manually.[/red]")
             msg = prompt_manual_message()
-            
+
             if not msg:
                 console.print(
                     "[red]Commit message cannot be empty. Exiting.[/red]")
@@ -191,5 +194,6 @@ def main():
 
         commit_with_message(msg)
     except KeyboardInterrupt:  # <-- Catch the specific exception
-            console.print("\n\n[bold yellow]Operation cancelled by user. Exiting.[/bold yellow]")
-            sys.exit(0)
+        console.print(
+            "\n\n[bold yellow]Operation cancelled by user. Exiting.[/bold yellow]")
+        sys.exit(0)
