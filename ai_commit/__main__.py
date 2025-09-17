@@ -182,8 +182,8 @@ def main():
         else:
             console.print(
                 "[red]Failed to generate a commit message. Please write one manually.[/red]")
-            msg = console.input(
-                "[yellow]Enter your commit message:[/yellow] ").strip()
+            msg = prompt_manual_message()
+            
             if not msg:
                 console.print(
                     "[red]Commit message cannot be empty. Exiting.[/red]")
