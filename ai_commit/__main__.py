@@ -193,7 +193,7 @@ def main():
                 sys.exit(1)
 
         commit_with_message(msg)
-    except KeyboardInterrupt:  # <-- Catch the specific exception
+    except KeyboardInterrupt:
         console.print(
             "\n\n[bold yellow]Operation cancelled by user. Exiting.[/bold yellow]")
         sys.exit(0)
