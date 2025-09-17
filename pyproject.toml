@@ -1,0 +1,15 @@
+[project]
+name = "ai-commit"
+version = "0.1.0"
+description = "CLI tool to generate commit messages using LLMs"
+authors = [{name="Your Name"}]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "huggingface-hub",
+    "requests",
+    "rich"
+]
+
+[project.scripts]
+ai-commit = "ai_commit.__main__:main"
