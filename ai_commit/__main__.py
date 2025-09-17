@@ -163,34 +163,33 @@ def main():
     parser.add_argument("--model", default=DEFAULT_MODEL,
                         help="Model to use (default: %(default)s)")
     args = parser.parse_args()
-
-    diff = get_staged_diff()
-    if not diff:
-        console.print(
-            "\n[red]No staged changes. Stage your files first (`git add`).[/red]")
-        sys.exit(1)
-
-    show_diff(diff)
-
-    with console.status("[bold green]Generating commit message...[/bold green]", spinner="dots"):
-        msg = generate_commit_message(diff, args.model, hf_token)
-
-    if msg:
-        show_suggested_message(msg)
-        msg = prompt_commit_message(
-            msg, diff, args.model, hf_token)
-    else:
-        console.print(
-            "[red]Failed to generate a commit message. Please write one manually.[/red]")
-        msg = console.input(
-            "[yellow]Enter your commit message:[/yellow] ").strip()
-        if not msg:
+    try:
+        diff = get_staged_diff()
+        if not diff:
             console.print(
-                "[red]Commit message cannot be empty. Exiting.[/red]")
+                "\n[red]No staged changes. Stage your files first (`git add`).[/red]")
             sys.exit(1)
 
-    commit_with_message(msg)
+        show_diff(diff)
 
+        with console.status("[bold green]Generating commit message...[/bold green]", spinner="dots"):
+            msg = generate_commit_message(diff, args.model, hf_token)
 
-# if __name__ == "__main__":
-#     main()
+        if msg:
+            show_suggested_message(msg)
+            msg = prompt_commit_message(
+                msg, diff, args.model, hf_token)
+        else:
+            console.print(
+                "[red]Failed to generate a commit message. Please write one manually.[/red]")
+            msg = console.input(
+                "[yellow]Enter your commit message:[/yellow] ").strip()
+            if not msg:
+                console.print(
+                    "[red]Commit message cannot be empty. Exiting.[/red]")
+                sys.exit(1)
+
+        commit_with_message(msg)
+    except KeyboardInterrupt:  # <-- Catch the specific exception
+            console.print("\n\n[bold yellow]Operation cancelled by user. Exiting.[/bold yellow]")
+            sys.exit(0)
