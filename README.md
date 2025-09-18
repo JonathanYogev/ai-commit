@@ -49,6 +49,21 @@ git add <files>
 ```bash
 ai-commit
 ```
+##### Follow the interactive prompts:
+
+- The tool will display the staged diff.
+
+- It will then show a suggested commit message.
+
+- You'll be prompted to choose an action:
+
+`[Y]es`: Accepts the message and commits.
+
+`[N]o`: Cancels the commit.
+
+`[E]dit`: Allows you to write your own message or edit the suggestion.
+
+`[R]egenerate`: Asks the AI to generate a new message.
 ### Options
 `--model` <model> : Choose a Hugging Face model (default: meta-llama/Llama-3.2-3B-Instruct).
 ##### example:
