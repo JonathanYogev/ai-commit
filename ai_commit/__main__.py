@@ -112,7 +112,7 @@ def show_suggested_message(msg: str):
         )
     )
 
-
+# ============ User Prompt Functions ============
 def prompt_manual_message() -> str:
     """Prompt the user to enter a commit message manually."""
     while True:
