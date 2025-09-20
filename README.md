@@ -34,7 +34,7 @@
 ### Install via source  
 ```bash
 git clone https://github.com/JonathanYogev/ai-commit.git
-cd ai-commit
+cd ai_commit
 pip install .
 ```
 
